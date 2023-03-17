@@ -4,7 +4,6 @@ import Card from "./Card";
 function PokeFetch() {
     const [allPokemons, setAllPokemons] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState('')
 
 
     const limit = 12;
@@ -52,21 +51,12 @@ function PokeFetch() {
 
     return (
         <div className="py-8 pb-16 px-4">
-            <form action="" className="" placeholder="Pokemons">
-                <input type="text" onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Pokemons" />
-            </form>
             <div className="ml-20 mr-20">
                 <h1 className="py-4 text-4xl font-bold mb-6">Pokemons</h1>
 
-              
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 w-[200px] md:w-[100%] mx-auto">
-                    {currentPokemons
-                    .filter((item => {
-                        return search.toLowerCase() === ''
-                        ? item
-                        : item.name.toLowerCase().includes(search)
-                    })).map((pokemon) => (
+                    {currentPokemons.map((pokemon) => (
                         <Card
                             key={pokemon.name}
                             id={pokemon.id}
