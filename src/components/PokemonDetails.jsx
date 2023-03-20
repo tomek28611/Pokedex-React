@@ -17,8 +17,9 @@ function PokemonDetails() {
     fetchPokemon();
   }, [id]);
 
+
   if (!pokemon) {
-    return <div>Loading...</div>;
+    return <div className="grid h-screen place-items-center text-4xl font-bold text-gray-500">Loading...</div>;
   }
 
   const handleProfilButtonClick = () => {
@@ -31,6 +32,7 @@ function PokemonDetails() {
 
   return (
     <div className="">
+      <img src={`https://projectpokemon.org/images/normal-sprite/${pokemon.name}.gif`} alt="" className="absolute  -mt-16 ml-40" />
       <div className="grid h-screen place-items-center">
         <div className="h-[600px]  min-w-[900px] p-4 flex flex-col items-center bg-white border border-gray-200 rounded-lg 
         shadow md:flex-row md:max-w-xl  dark:border-gray-700 dark:bg-gray-800

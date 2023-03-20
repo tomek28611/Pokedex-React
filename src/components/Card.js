@@ -7,7 +7,7 @@ const Card = ({ id, image, name, types, onClick }) => {
     <div className="bg-white shadow-2xl cursor-pointer hover:bg-gray-200">
     <Link to={`/pokemon/${id}`}>
     <img className="" src={image} alt="" />
-    <h2 className="bg-red-500 text-gray-300 text-2xl p-6 text-center capitalize">{name}</h2>
+    <h2 className="bg-[#ff3e4e] text-gray-300 text-2xl p-6 text-center capitalize">{name}</h2>
     </Link>
 
     </div>

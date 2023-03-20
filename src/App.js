@@ -3,7 +3,9 @@ import Navbar from "./components/Navbar";
 import PokeFetch from './components/PokeFetch';
 import PokemonDetails from "./components/PokemonDetails";
 import Footer from "./components/Footer";
-import Search from "./components/Search";
+import About from "./components/About";
+
+
 
 function App() {
   return (
@@ -16,7 +18,10 @@ function App() {
       
       <Route path="/" element={<PokeFetch />}/>
       <Route path="/pokemon/:id" element={<PokemonDetails/>}/>
-      <Route path="/search" element={<Search />}/>
+      <Route path="/about" element={<About/>}/>
+ 
+
+
     
     </Routes>
     </BrowserRouter>

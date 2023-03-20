@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 
+
 function PokeFetch() {
     const [allPokemons, setAllPokemons] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState('')
-
+    const [search, setSearch] = useState('');
 
     const limit = 12;
     const totalPokemons = 151;
@@ -45,43 +45,58 @@ function PokeFetch() {
         setCurrentPage(page);
     };
 
-
     const startIndex = (currentPage - 1) * limit;
     const endIndex = startIndex + limit;
     const currentPokemons = allPokemons.slice(startIndex, endIndex);
 
+    const filteredPokemons = allPokemons.filter(pokemon => {
+        return search.toLowerCase() === ''
+            ? true
+            : pokemon.name.toLowerCase().includes(search)
+    });
+
     return (
         <div className="py-8 pb-16 px-4">
-            <form action="" className="" placeholder="Pokemons">
-                <input type="text" onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Pokemons" />
-            </form>
+
             <div className="ml-20 mr-20">
                 <h1 className="py-4 text-4xl font-bold mb-6">Pokemons</h1>
 
-              
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 w-[200px] md:w-[100%] mx-auto">
-                    {currentPokemons
-                    .filter((item => {
-                        return search.toLowerCase() === ''
-                        ? item
-                        : item.name.toLowerCase().includes(search)
-                    })).map((pokemon) => (
-                        <Card
-                            key={pokemon.name}
-                            id={pokemon.id}
-                            image={
-                                pokemon.sprites.other["official-artwork"].front_default
-                            }
-                            name={pokemon.name}
-                        />
-                    ))}
+                <div class='max-w-md mx-auto'>
+                    <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+                        <div class="grid place-items-center h-full w-12 text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+
+                        <input
+                            onChange={(e) => setSearch(e.target.value)}
+                            class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                            type="text"
+                            id="search"
+                            placeholder="Find Pokemon ..." />
+                    </div>
                 </div>
-                <div className="flex justify-center my-4">
+
+                <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 w-[200px] md:w-[100%] mx-auto">
+                    {filteredPokemons
+                        .slice(startIndex, endIndex)
+                        .map((pokemon) => (
+                            <Card
+                                key={pokemon.name}
+                                id={pokemon.id}
+                                image={
+                                    pokemon.sprites.other["official-artwork"].front_default
+                                }
+                                name={pokemon.name}
+                            />
+                        ))}
+                </div>
+                <div className="flex justify-center mt-20">
                     <button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
-                        className="bg-blue-500 text-white font-bold py-2 px-4 rounded-l"
+                        className="px-4 py-2 text-gray-500 transition-colors duration-150  border border-gray-500 rounded-l-lg focus:shadow-outline hover:bg-gray-300"
                     >
                         Prev
                     </button>
@@ -90,8 +105,8 @@ function PokeFetch() {
                             key={index}
                             onClick={() => handlePageClick(index + 1)}
                             className={`${currentPage === index + 1
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-gray-200 text-gray-500"
+                                ? "px-4 py-2 text-gray-500 transition-colors duration-150  border border-gray-400 focus:shadow-outline"
+                                : " text-gray-500 hover:bg-gray-300"
                                 } font-bold py-2 px-4`}
                         >
                             {index + 1}
@@ -100,7 +115,7 @@ function PokeFetch() {
                     <button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}
-                        className="bg-blue-500 text-white font-bold py-2 px-4 rounded-r"
+                        className="px-4 py-2 text-gray-500 transition-colors duration-150  border border-gray-500 rounded-r-lg focus:shadow-outline hover:bg-gray-300"
                     >
                         Next
                     </button>
@@ -111,3 +126,15 @@ function PokeFetch() {
 }
 
 export default PokeFetch;
+
+<div class="bg-white p-4 flex items-center flex-wrap">
+  <nav aria-label="Page navigation">
+	<ul class="inline-flex">
+	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 rounded-l-lg focus:shadow-outline hover:bg-green-100">Prev</button></li>
+	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 focus:shadow-outline">1</button></li>
+	  <li><button class="px-4 py-2 text-white transition-colors duration-150 bg-green-600 border border-r-0 border-green-600 focus:shadow-outline">2</button></li>
+	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 focus:shadow-outline hover:bg-green-100">3</button></li>
+	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-green-600 rounded-r-lg focus:shadow-outline hover:bg-green-100">Next</button></li>
+	</ul>
+  </nav>
+</div>
