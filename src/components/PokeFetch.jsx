@@ -13,25 +13,25 @@ function PokeFetch() {
 
     const getAllPokemons = async () => {
         const res = await fetch(
-            `https://pokeapi.co/api/v2/pokemon?limit=${totalPokemons}&offset=0`
+          `https://pokeapi.co/api/v2/pokemon?limit=${totalPokemons}&offset=0`
         );
         const data = await res.json();
-
-        function createPokemonObject(results) {
-            results.forEach(async (pokemon) => {
-                const res = await fetch(
-                    `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-                );
-                const data = await res.json();
-                setAllPokemons((currentList) => [...currentList, data]);
-            });
-        }
         createPokemonObject(data.results);
-    };
-
-    useEffect(() => {
+      };
+    
+      const createPokemonObject = async (results) => {
+        const pokemonPromises = results.map(async (pokemon) => {
+          const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+          return res.json();
+        });
+    
+        const pokemonData = await Promise.all(pokemonPromises);
+        setAllPokemons((currentList) => [...currentList, ...pokemonData]);
+      };
+    
+      useEffect(() => {
         getAllPokemons();
-    }, []);
+      }, []);
 
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1);
@@ -127,14 +127,3 @@ function PokeFetch() {
 
 export default PokeFetch;
 
-<div class="bg-white p-4 flex items-center flex-wrap">
-  <nav aria-label="Page navigation">
-	<ul class="inline-flex">
-	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 rounded-l-lg focus:shadow-outline hover:bg-green-100">Prev</button></li>
-	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 focus:shadow-outline">1</button></li>
-	  <li><button class="px-4 py-2 text-white transition-colors duration-150 bg-green-600 border border-r-0 border-green-600 focus:shadow-outline">2</button></li>
-	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 focus:shadow-outline hover:bg-green-100">3</button></li>
-	  <li><button class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-green-600 rounded-r-lg focus:shadow-outline hover:bg-green-100">Next</button></li>
-	</ul>
-  </nav>
-</div>
