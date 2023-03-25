@@ -55,6 +55,7 @@ function PokeFetch() {
             : pokemon.name.toLowerCase().includes(search)
     });
 
+
     return (
         <div className="py-8 pb-16 px-4">
 
